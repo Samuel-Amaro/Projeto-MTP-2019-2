@@ -1,20 +1,18 @@
+//tela de login onde informa um usuario e senha
 package meuprimeirojframe;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 public class TelaLoginUm extends javax.swing.JFrame implements ActionListener { 
-//implementando uma interface para fazer uma ação para o botão
+                                                    //implementando uma interface para fazer uma ação para o botão
    
+    UsuarioDataBase userLogin; // um atributo global do tipo usuario que guardara toda informação de um usuario
     //METODO COSTRUTOR QUE INICIA COMPONENTES LOGO DE CARA
     public TelaLoginUm() {
         initComponents();
-        // uma ação para o botão 1 MANEIRA
-        //jBotao2.addActionListener(this); 
         setLocationRelativeTo(null); // para a tela ficar centralizada
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -22,7 +20,7 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         campoTexto1Usuario = new javax.swing.JTextField();
-        Botao2ComBotãoCliqueAqui = new javax.swing.JButton();
+        botao2Entrari = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPasswordField1CampoSenha = new javax.swing.JPasswordField();
         campoTexto3MensagemParaLogin = new javax.swing.JLabel();
@@ -35,14 +33,20 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
 
         jLabel1.setText("         Usuario:");
 
-        Botao2ComBotãoCliqueAqui.setText("Entrar!");
-        Botao2ComBotãoCliqueAqui.addActionListener(new java.awt.event.ActionListener() {
+        botao2Entrari.setText("Entrar!");
+        botao2Entrari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Botao2ComBotãoCliqueAquiActionPerformed(evt);
+                botao2EntrariActionPerformed(evt);
             }
         });
 
         jLabel2.setText("        Senha:");
+
+        jPasswordField1CampoSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1CampoSenhaActionPerformed(evt);
+            }
+        });
 
         botao2Cancelar.setText("Cancelar!");
         botao2Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -58,89 +62,91 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(campoTexto3MensagemParaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(campoTexto1Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1CampoSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                            .addComponent(campoTexto4MensagemDeInformação, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Botao2ComBotãoCliqueAqui)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botao2Cancelar)))))
-                .addContainerGap(186, Short.MAX_VALUE))
+                    .addComponent(campoTexto4MensagemDeInformação)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addComponent(campoTexto3MensagemParaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(campoTexto1Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(botao2Entrari)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(botao2Cancelar))
+                                        .addComponent(jPasswordField1CampoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(21, 21, 21)
                 .addComponent(campoTexto4MensagemDeInformação, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoTexto1Usuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordField1CampoSenha))
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Botao2ComBotãoCliqueAqui)
-                    .addComponent(botao2Cancelar))
-                .addGap(26, 26, 26)
-                .addComponent(campoTexto3MensagemParaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botao2Cancelar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botao2Entrari)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(campoTexto3MensagemParaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(51, 51, 51))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     //IMPLEMENTANDO METODO DA INTERFACE ACTION LISTENER, VAI EXECUTAR UMA AÇÃO EM UM EVENTO EM UM BOTÃO AO CLICALO
-    private void Botao2ComBotãoCliqueAquiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Botao2ComBotãoCliqueAquiActionPerformed
-        /*Uma primeira ação para esse botão*/
-        /*// TODO add your handling code here:
-        //uma ação para 1 maneira de fazer uma ação para o botão 
-        //jTexto.setText("Voçê Clicou!");
-        //UMA AÇÃO PARA O BOTÃO 2 - MANEIRA
-        if(campoTexto1Usuario.getText().equals("root") && jPasswordField1CampoSenha.getText().equals("123")) {
-           //uma maneira de mostrar mensagem em um label
-           //campoTexto3MensagemParaLogin.setText("Login feito com Sucesso");
-           //mostra uma mensagem dentro de uma caixa de dialogo
-            String mensagem = new String("Usuario e Senha Corretos!");
-            JOptionPane.showMessageDialog(null,mensagem,"Caixa De Dialogo, Exemplo!", WIDTH);
-        }
-        else  {
-               //mostra uma mensagem em uma caixa de dialogo com um botão
-               String mensagem2= new String("Voçê Sera Redicionado, Para Tela De Inicio!");
-               JOptionPane.showMessageDialog(null,mensagem2,"Caixa De Dialogo, Exemplo!", WIDTH);
-              //campoTexto3MensagemParaLogin.setText("Usuario e senha Incorretos!");
-        }*/
-        
-        //fazendo um açaõ para o botão // criando uma ação para conectar ao banco de dados, ao clicar no botão entrar conecta ao banco de dados com algum usuario e senha
-        //objeto istanciado da classe do banco de dados, retorna um objeto do tipo conexão que sera usado para fazer uma conecão
+    private void botao2EntrariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2EntrariActionPerformed
+        /* uma ação diferente para o botão*/
+        // criando uma ação para conectar ao banco de dados, ao clicar no botão entrar, conecta ao banco de dados com algum usuario e senha informados nos textFild
+        //objeto istanciado da classe do banco de dados, retorna um objeto do tipo conexão que sera usado para fazer uma conecxão
         ConexaoBancoDeDados conection = new ConexaoBancoDeDados();
         conection.conectar(); //chamado metodo conectar para conectar ao banco de dados
-        
         //o parametro e o campo texto que alguem digitou e logo depois pego o que ele digitou e passo como parametro
-        //metodo que recebe um usuario e senha e verifica se ele existe se existir retorna o nome dessa cara
+        //metodo que recebe um usuario e senha e verifica se ele existe se existir
         //o paramtro do metodo e diferente do que o getsenha retorna um vetorchar, por isso converto ele como string para passar para meu metodo
         //metodo login so faz puxar algo que ja existi no banco de dados, ou que não extiste retorna nada
-        String resultado = conection.login(campoTexto1Usuario.getText(),new String(jPasswordField1CampoSenha.getPassword()));
-        // o resultado de login retorna um nome, se tiver alguem cadastrado retorna ele e verifica no if se login retorna a alguma pessoa e logo depois da uma mensagem
+        //OQUE MEU METODO LOGIN RETORNA E UM USUARIO COMPLETO COM TODOS SEUS DADOS, EU GUARDO ESSE CARA NUMA VARIAVEL DE TIPO USUARIO
+        this.userLogin = conection.login(campoTexto1Usuario.getText(),new String(jPasswordField1CampoSenha.getPassword()));
+        // o resultado de login retorna um usuario completo, se tiver alguem cadastrado retorna ele e verifica no if se login retorna a alguma pessoa
         //apos o retorno tenho que valida oque login retorna
-        if(resultado != null) { //verifica se tem algo dentro de resultado se tiver ele manda uma mensagem 
-           JOptionPane.showMessageDialog(null,"Logado com Sucesso! " + resultado);
+        if(this.userLogin != null) { 
+           //verifica se tem algo dentro de resultado se tiver ele manda uma mensagem 
+           //apos verifica se no ma minha variavel tem alguma pessoa existente do banco e apos logado, vai abrir uma nova tela.
+           JOptionPane.showMessageDialog(null,"Logado com Sucesso!");
+           //apos o login feito com suceeso abrirei uma nova tela e nessa tela e a tela principal do sistema, para essa tela em seu
+           //metodo costrutor passarei um objeto do tipo da classe usuario, nesse objeto ira conter tudo de dado e informação de um usuario recem logado
+           //isso e feito atraves do costrutor desssa nova tela e por meio da conexão criada e o metodo login tudo guradado em resultadousuario
+           TelaPrincipalDoSistemaAlteraCadastro pf = new TelaPrincipalDoSistemaAlteraCadastro(this.userLogin);
+           pf.setVisible(true); //deixa tela nova vizivel
+           dispose(); // desfas da tela atual
         }
-        else { //se não tiver ninguem retorna isso
-            JOptionPane.showMessageDialog(null,"Usuario ou senha Estão Digitados Incorretamente!");
+        
+        else{
+                //ocorreu um erro qualquer da essa mensagem            
+                JOptionPane.showMessageDialog(null,"E necessario Digitar seu email e senha, Corretamente para Fazer Login, Se estiver Correto e Sinal de que Voçê Não esta Cadastrado, Se cadastre Agora!");
         }
-    }//GEN-LAST:event_Botao2ComBotãoCliqueAquiActionPerformed
+  
+    }//GEN-LAST:event_botao2EntrariActionPerformed
 
     private void botao2CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2CancelarActionPerformed
         //se apertar botão cancelar volta para a tela anterior a de inicio
@@ -150,43 +156,14 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
         dispose(); //fecha a tela atual 
     }//GEN-LAST:event_botao2CancelarActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaLoginUm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaLoginUm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaLoginUm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaLoginUm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void jPasswordField1CampoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1CampoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1CampoSenhaActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //ISTANCIA UM OBJETO ANONIMO PARA EU NÃO TER ACESSO
-                new TelaLoginUm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Botao2ComBotãoCliqueAqui;
     private javax.swing.JButton botao2Cancelar;
+    private javax.swing.JButton botao2Entrari;
     private javax.swing.JTextField campoTexto1Usuario;
     private javax.swing.JLabel campoTexto3MensagemParaLogin;
     private javax.swing.JLabel campoTexto4MensagemDeInformação;

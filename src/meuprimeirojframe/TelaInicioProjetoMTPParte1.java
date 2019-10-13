@@ -1,11 +1,13 @@
-
+//todas as outras telas estão sem metodo main, a unica com metodo main principal e essa ela vai ser a referencia da execução
 package meuprimeirojframe;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TelaInicioProjetoMTPParte1 extends javax.swing.JFrame implements ActionListener{
-
+    
+    private UsuarioDataBase userPrincipal;
+    //metodo costrutor que costroi a tela logo ao instanciar ela
     public TelaInicioProjetoMTPParte1() {
         initComponents();
         setLocationRelativeTo(null); // para a tela ficar centralizada
@@ -78,18 +80,19 @@ public class TelaInicioProjetoMTPParte1 extends javax.swing.JFrame implements Ac
         //istanciando tela secundaria tela secundaria, ao clicar no botão aparece uma tela secundaria a de fazer login
         TelaLoginUm pm = new TelaLoginUm();
         pm.setVisible(true); // deixando a tela secundaria visivel 
-        dispose(); // encerrando a tela atual que estou nela a de inicio sem o objeto e automatico
+        dispose(); //encerrando a tela atual que estou nela a de inicio sem o objeto e automatico
         
         
     }//GEN-LAST:event_botao1EntrarActionPerformed
 
     private void botao2CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2CadastrarActionPerformed
       //apertou botão cadastrar vai para a tela de cadastro
-      TelaCadastro fbc = new TelaCadastro();
+      TelaCadastro fbc = new TelaCadastro(this.userPrincipal);
       fbc.setVisible(true); //deixando ela visivel
       dispose(); // encerrando a tela atual
     }//GEN-LAST:event_botao2CadastrarActionPerformed
-
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -121,10 +124,6 @@ public class TelaInicioProjetoMTPParte1 extends javax.swing.JFrame implements Ac
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaInicioProjetoMTPParte1().setVisible(true);
-               
-                
-                
-                
             }
         });
     }
