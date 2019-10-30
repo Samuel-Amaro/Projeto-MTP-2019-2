@@ -87,7 +87,7 @@ public class TelaInicioProjetoMTPParte1 extends javax.swing.JFrame implements Ac
 
     private void botao2CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2CadastrarActionPerformed
       //apertou botão cadastrar vai para a tela de cadastro
-      TelaCadastro fbc = new TelaCadastro(this.userPrincipal);
+      TelaCadastro fbc = new TelaCadastro();
       fbc.setVisible(true); //deixando ela visivel
       dispose(); // encerrando a tela atual
     }//GEN-LAST:event_botao2CadastrarActionPerformed

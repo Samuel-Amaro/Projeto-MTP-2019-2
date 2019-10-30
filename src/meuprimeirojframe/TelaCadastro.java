@@ -245,14 +245,32 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void botao2CancelaCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2CancelaCadastroActionPerformed
         //istanciando tela secunadaria, de inicio, ao clicar no botão cancelar
         //criando nova tela de inicio para voltar
-        TelaPrincipalDoSistemaAlteraCadastro tipm = new TelaPrincipalDoSistemaAlteraCadastro(this.userCadastro);
-        tipm.setVisible(true); //deixando ela visivel
-        dispose(); //encerrando tela atual de cadastro
+        //TelaPrincipalDoSistemaAlteraCadastro tipm = new TelaPrincipalDoSistemaAlteraCadastro(this.userCadastro);
+        //tipm.setVisible(true); //deixando ela visivel
+        //dispose(); //encerrando tela atual de cadastro
+        
+        //vendo se as caixas de texto estão vazias para voltar para a tela de login
+        if(this.campoTextoNomeCompletoTelaCadastro1.getText().equals("") && this.campoTextoTelefone2TelaCadastro.getText().equals("") && this.campoTextoEmail3.getText().equals("") && this.campoTexto4CidadeEstado.getText().equals("") && new String(this.jPasswordFieldSenha1.getPassword()).equals("") && new String(this.confirmaSenha2.getPassword()).equals("")) {
+            //vai verificar se todas as caixas de textos estão vazias se tiver não deixa cadastrar
+            TelaLoginUm login = new TelaLoginUm();
+            login.setVisible(true);
+            dispose();
+        }
+        else {
+            JOptionPane.showMessageDialog(null,"Seria Bom se apaguasse os dados Não usados nas caixas!");
+            TelaLoginUm login = new TelaLoginUm();
+            login.setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_botao2CancelaCadastroActionPerformed
 
     
     private void botao1ConfirmaCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao1ConfirmaCadastroActionPerformed
-        //se for inserir um nova pessoa no BD, ou alterar um novo cadastro
+      //antes de alterar ou cadastrar uma pessoa devo verificar se não quer inserir uma pessoa nula não preencheu nehum dado
+      if(this.campoTextoNomeCompletoTelaCadastro1.getText().equals("") && this.campoTextoTelefone2TelaCadastro.getText().equals("") && this.campoTextoEmail3.getText().equals("") && this.campoTexto4CidadeEstado.getText().equals("") && new String(this.jPasswordFieldSenha1.getPassword()).equals("") && new String(this.confirmaSenha2.getPassword()).equals("")) {
+         JOptionPane.showMessageDialog(null,"Cade os Dados Cadastrais Da Pessoa ?");
+      }
+         //se for inserir um nova pessoa no BD, ou alterar um novo cadastro
         //guardo a senha de cadastro em um objeto de tipo string
         String senha = new String(jPasswordFieldSenha1.getPassword());
         //faço o mesmo para a senha de confirmação
@@ -274,6 +292,12 @@ public class TelaCadastro extends javax.swing.JFrame {
                     conectaDataBase.inserirIntoDataBase(campoTextoNomeCompletoTelaCadastro1.getText(), campoTextoEmail3.getText(), new String(jPasswordFieldSenha1.getPassword()), campoTextoTelefone2TelaCadastro.getText(), campoTexto4CidadeEstado.getText());
                     //se deu tudo certo mando uma mensagem
                     JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+                    //e atualizo um objeto com todas informações desse cara recem cadastrado para a tela principal do sistema mando esse objeto para la
+                    UsuarioDataBase userAux = new UsuarioDataBase();
+                    userAux = conectaDataBase.login(this.campoTextoEmail3.getText(),new String(this.jPasswordFieldSenha1.getPassword()));
+                    TelaPrincipalDoSistemaAlteraCadastro tps = new TelaPrincipalDoSistemaAlteraCadastro(userAux);
+                    tps.setVisible(true);
+                    dispose();
                 } else {
                     //se o cara ja existe chamo o metodo altera cadastro de conexão
                     try {
