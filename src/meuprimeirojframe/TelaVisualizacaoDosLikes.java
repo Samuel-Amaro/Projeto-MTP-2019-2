@@ -1,5 +1,5 @@
 //tela de visualização de likes, e aonde o panel vai ser istanciado de maneira dinamica para visualizar seus ultimos 3 likes recebidos 
-//em seus post
+//em seus ultimo post postado
 package meuprimeirojframe;
 
 public class TelaVisualizacaoDosLikes extends javax.swing.JFrame {

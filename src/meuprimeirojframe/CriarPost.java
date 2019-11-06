@@ -24,7 +24,8 @@ public class CriarPost extends javax.swing.JFrame{
     private File arquivo;
     //objeto de tipo FileChoser, atraves dele pode se escolher uma imagem no disco rigido
     private JFileChooser escolheImageFileChooser;
-    
+    //atributo que guarda o tipo de retorno do file choser,atraves dele sabera se escolheu um arquivo ou não
+    int retorno;
     public CriarPost() {
         initComponents();
         setLocationRelativeTo(null);
@@ -49,11 +50,9 @@ public class CriarPost extends javax.swing.JFrame{
         areaTextoDescricaoPost = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         botaoEscolherImagem = new javax.swing.JButton();
-        labelMostraImagem = new javax.swing.JLabel();
         botaoConfirmaCriacaoDoPost = new javax.swing.JButton();
         botaoCancelaCriacaoDoPost = new javax.swing.JButton();
         etiquetaDeMensagemDeAvizo = new javax.swing.JLabel();
-        botaoMostraImagem = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -82,8 +81,6 @@ public class CriarPost extends javax.swing.JFrame{
             }
         });
 
-        labelMostraImagem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         botaoConfirmaCriacaoDoPost.setText("Confirma Criação Do Post!");
         botaoConfirmaCriacaoDoPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,13 +95,6 @@ public class CriarPost extends javax.swing.JFrame{
             }
         });
 
-        botaoMostraImagem.setText("Mostrar Imagem");
-        botaoMostraImagem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoMostraImagemActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,31 +102,23 @@ public class CriarPost extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(botaoEscolherImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(etiquetaDeMensagemDeAvizo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoMostraImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(69, 69, 69)
-                                .addComponent(botaoConfirmaCriacaoDoPost, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoCancelaCriacaoDoPost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelMostraImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 639, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(130, 130, 130)
                         .addComponent(etiquetaParaDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoCancelaCriacaoDoPost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botaoEscolherImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(etiquetaDeMensagemDeAvizo, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoConfirmaCriacaoDoPost, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 230, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,20 +130,14 @@ public class CriarPost extends javax.swing.JFrame{
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(botaoEscolherImagem)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(etiquetaDeMensagemDeAvizo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(botaoMostraImagem))
-                .addGap(15, 15, 15)
-                .addComponent(labelMostraImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoEscolherImagem)
+                    .addComponent(etiquetaDeMensagemDeAvizo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(botaoConfirmaCriacaoDoPost)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConfirmaCriacaoDoPost)
-                    .addComponent(botaoCancelaCriacaoDoPost))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addComponent(botaoCancelaCriacaoDoPost)
+                .addContainerGap(287, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,14 +149,14 @@ public class CriarPost extends javax.swing.JFrame{
        tps.setVisible(true);
        dispose();
     }//GEN-LAST:event_botaoCancelaCriacaoDoPostActionPerformed
-
+    
     private void botaoEscolherImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEscolherImagemActionPerformed
         //aqui e onde usuario escolhe uma imagem para seu post, e escolhida atraves do disco rigido
         //verifica se o objeto de tipo eventtem uma chamada desse botão
         if(evt.getSource() == this.botaoEscolherImagem) {
            //esse cara abaixo ele abre a caixa de eecolha de imagem no disco rigido e retorna uma costante so que em formato de numero
            //ele detecta se eu escolhe algo ou não na caixa de dialogo
-           int retorno = this.escolheImageFileChooser.showOpenDialog(this);
+           retorno = this.escolheImageFileChooser.showOpenDialog(this);
            //A variavel de tipo retorno tem que ser == a verdadeiro a essa costante, abaixo, tipo tem que ter escolhido algum arquivo
            // eu comparo isso com a costante QUE POSSUI UM VALOR DE QUE ALGO FOI ESCOLHIDO
            if(retorno == JFileChooser.APPROVE_OPTION){
@@ -189,20 +165,49 @@ public class CriarPost extends javax.swing.JFrame{
               this.arquivo = this.escolheImageFileChooser.getSelectedFile();
               //guardo as informações da imagem selecionada no objeto de tipo file
               //e ja salvo meu post no banco de dados logo aqui nesse cara
-             salvarArquivoBD();
+             //salvarArquivoBD();
+             //mostra uma mensagem de escolha de arquivo e o nome do arquivo.
+             this.etiquetaDeMensagemDeAvizo.setText("Escolheu " + this.arquivo.getName());
            }
            else{
                 //se não escolheu nada mando uma mensagem
                 this.etiquetaDeMensagemDeAvizo.setText("Cancelado escolha de imagem!");
                 //atribuo a retorno a opção cancelada, não escolheu imagem
-              }
+                retorno = JFileChooser.CANCEL_OPTION;
+                this.arquivo = null;//atribuo ao arquivo o null
+           }
         }
     }//GEN-LAST:event_botaoEscolherImagemActionPerformed
 
     private void botaoConfirmaCriacaoDoPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmaCriacaoDoPostActionPerformed
        //mostrarImagemNaLabel();
         //botão que aqui e aonde o cara confirma a criação do post
-       //criou descrição e pegou a imagem necessaria salvo o post no banco de dados
+       //verifica se o post e so de imagem sem texto se for, não mando para o banco
+       if(retorno == JFileChooser.APPROVE_OPTION && this.areaTextoDescricaoPost.getText().equals("")) {
+           JOptionPane.showMessageDialog(null,"Um post precisa de Descrição e imagem ou so descrição ou so Imagem e descrição!");
+       }
+       //se o texto dentro da caixa de texto for menor que 140 caracteres e se não tiver imagem eu mando um post so composto de texto
+       if(this.areaTextoDescricaoPost.getText().length() < 140 && this.arquivo == null) {
+              //istanciando uma nova conexão
+              ConexaoBancoDeDados cone = new ConexaoBancoDeDados(this.userPrincipal);
+              try {
+                  cone.conectar();//conectando ao banco
+                  //preparando a consulta de inserção de um post so de texto
+                  PreparedStatement inseriSoTexto = cone.getConnection().prepareStatement("INSERT INTO post (fk_pessoa,descricao,data) VALUES (?,?,now());");
+                  //setando informações na consulta
+                  inseriSoTexto.setInt(1,this.userPrincipal.getId());//setando o id da pessoa dono do post
+                  inseriSoTexto.setString(2,this.areaTextoDescricaoPost.getText());//setando a descrição do post
+                  //inseriSoTexto.setBytes(3,null);//como não tem imagem no post passo um null
+                  inseriSoTexto.executeUpdate();
+                  inseriSoTexto.close();
+              }catch(SQLException e) {
+                    JOptionPane.showMessageDialog(null,"Seu Post composto so de Texto não Deu Certo!");
+              }
+        }
+       //se o post não e so de texto e de texto com imagem
+       else if(this.arquivo != null && this.areaTextoDescricaoPost.getText().length() < 140 && !this.areaTextoDescricaoPost.getText().equals("")){
+           salvarArquivoBD();
+       }
        TelaPrincipalDoSistemaAlteraCadastro tps = new TelaPrincipalDoSistemaAlteraCadastro(this.userPrincipal);
        tps.setVisible(true);
        dispose();
@@ -223,10 +228,6 @@ public class CriarPost extends javax.swing.JFrame{
     private void areaTextoDescricaoPostKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaTextoDescricaoPostKeyTyped
 
     }//GEN-LAST:event_areaTextoDescricaoPostKeyTyped
-
-    private void botaoMostraImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoMostraImagemActionPerformed
-    //mostrarImagemNaLabel();
-    }//GEN-LAST:event_botaoMostraImagemActionPerformed
     
      //metodo que salva arquivo e descriçaõ e post no banco de dados
      public void salvarArquivoBD(){
@@ -240,7 +241,7 @@ public class CriarPost extends javax.swing.JFrame{
              //chamando o metodo conexão para conectar ao banco de dados
              conexao.conectar();
              //prepaarando consulta de inserção do post no banco de dados
-             PreparedStatement ps = conexao.getConnection().prepareStatement("INSERT INTO post (fk_pessoa,descricao,imagem) VALUES (?, ?, ?);");
+             PreparedStatement ps = conexao.getConnection().prepareStatement("INSERT INTO post(fk_pessoa,descricao,imagem,data) VALUES (?, ?, ?,now());");
              //setando os pontos de interrogação na consulta
              ps.setInt(1,this.userPrincipal.getId()); //setando id da pessoa relacionada ao post
              //o texto da caixa de texto esta em chararray,para tirar texto da caixa de texto e trasforma para string uso uma variavel
@@ -265,16 +266,20 @@ public class CriarPost extends javax.swing.JFrame{
             //não pode ser acessado relacionado a arquivo essa exception a o fileinput e outputStrem
             JOptionPane.showMessageDialog(null,"o arquivo selecionado possui alguma falha!");
          } catch(IOException e) {
-            //EXCEÇÃO A SER TRATADA PARA QUEM CHMAR O METODO EXCEÇÃO RELACIONADA A ENTRADA E SAIDA DO CONSOLE
+            //EXCEÇÃO A SER TRATADA PARA QUEM CHAMAR O METODO EXCEÇÃO RELACIONADA A ENTRADA E SAIDA DO CONSOLE
             JOptionPane.showMessageDialog(null,"Ocorreu um erro ao Escolher o arquivo!");
-         } 
+         }
+         catch(NullPointerException e) {
+            //JOptionPane.showMessageDialog(null,"Objeto esta Vazio!");
+            e.printStackTrace();
+         }
           
       
      }
 
+     //METODO FEITO MEIO POR AVENTURAR-SE MAS NÃO FAZ PARTE DO PROJETO NÃO E REQUISITO
      //apos escolher imagem tenho que costrui a imagem na label para usuario ver como esta
      //vou fazer atraves do metodo que vai puxar a imagem relacionada  a pesssoa tal e evou costrui a imagem na label
-     
      //vai puxar um post especifico de uma pessoa especifica e vai pegar a imagem desse post em binario e vai costrui ela na label 
      //atraves desse metodo
      /*private void mostrarImagemNaLabel() {
@@ -319,12 +324,10 @@ public class CriarPost extends javax.swing.JFrame{
     private javax.swing.JButton botaoCancelaCriacaoDoPost;
     private javax.swing.JButton botaoConfirmaCriacaoDoPost;
     private javax.swing.JButton botaoEscolherImagem;
-    private javax.swing.JButton botaoMostraImagem;
     private javax.swing.JLabel etiquetaDeMensagemDeAvizo;
     private javax.swing.JLabel etiquetaParaDescricao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel labelMostraImagem;
     // End of variables declaration//GEN-END:variables
 }

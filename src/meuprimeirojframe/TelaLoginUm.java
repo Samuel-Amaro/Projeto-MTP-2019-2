@@ -116,6 +116,12 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
 
     //IMPLEMENTANDO METODO DA INTERFACE ACTION LISTENER, VAI EXECUTAR UMA AÇÃO EM UM EVENTO EM UM BOTÃO AO CLICALO
     private void botao2EntrariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao2EntrariActionPerformed
+        //condição se caso umas das caixas de texto estejam vazias
+        if(evt.getSource() == this.botao2Entrari) {
+           if(this.campoTexto1Usuario.equals("") || new String(this.jPasswordField1CampoSenha.getPassword()).equals("")) {
+              JOptionPane.showMessageDialog(this,"Digite Um Usuario Cadastrado!");
+           }
+        }
         /* uma ação diferente para o botão*/
         // criando uma ação para conectar ao banco de dados, ao clicar no botão entrar, conecta ao banco de dados com algum usuario e senha informados nos textFild
         //objeto istanciado da classe do banco de dados, retorna um objeto do tipo conexão que sera usado para fazer uma conecxão

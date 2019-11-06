@@ -1,6 +1,9 @@
 package meuprimeirojframe;
 
 //classe do post vai servir para popular o post em qualquer lugar
+
+import java.sql.Date;
+
 //de uma tela para outra
 public class ClassePost {
 
@@ -10,6 +13,15 @@ private int fk_pessoa;
 private String descricao;
 private  byte[] binarioImagem;
 private int numeroLikes;
+private Date data;
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
     public int getNumeroLikes() {
         return numeroLikes;

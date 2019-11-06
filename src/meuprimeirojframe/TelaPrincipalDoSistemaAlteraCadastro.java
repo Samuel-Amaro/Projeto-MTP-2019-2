@@ -7,6 +7,7 @@ package meuprimeirojframe;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
@@ -53,7 +54,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
             }
         });
 
-        retornaParaTelaAnterior.setText("retorna Para tela anterior!");
+        retornaParaTelaAnterior.setText("Sair Da Rede!");
         retornaParaTelaAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 retornaParaTelaAnteriorActionPerformed(evt);
@@ -77,10 +78,8 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setToolTipText("");
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(702, 32767));
 
         painelPostInterno.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        painelPostInterno.setMaximumSize(new java.awt.Dimension(756, 3207));
         jScrollPane1.setViewportView(painelPostInterno);
 
         botaoMostraPostsDeTodoMundo.setText("Ver Posts e Dar Like!");
@@ -192,8 +191,9 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
         MostrarPost mps;//tipo JpanelInterno
         try {
             con = new ConexaoBancoDeDados(this.userPrincipal);
-            con.conectar();
-            PreparedStatement ps = this.con.getConnection().prepareStatement("SELECT id_post,descricao,imagem,(SELECT count(*) as co FROM like_post where fk_post = id_post)FROM post where fk_pessoa = ? order by id_post desc LIMIT ?;");
+            con.conectar();                                                                                   //combinação de sub consulta falo para trazer a quantidade de likes
+                                                                                                              //de um determinado post, que sempre vai mudar e o id atual da consulta                                                    
+            PreparedStatement ps = this.con.getConnection().prepareStatement("SELECT id_post,descricao,imagem,(SELECT count(*) as co FROM like_post where fk_post = id_post),data FROM post where fk_pessoa = ? order by id_post desc LIMIT ?;");
             //setando ponto de interrogação na consulta
             ps.setInt(1, this.userPrincipal.getId());
             ps.setInt(2, 3);
@@ -211,6 +211,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                 guardaPost.setBinarioImagem(resultado.getBytes(3));
                 //via combinação de sub consultas de acordo com a consulta
                 guardaPost.setNumeroLikes(resultado.getInt(4));
+                guardaPost.setData(resultado.getDate(5));//setando o total de likes de um determindo post no objeto
                 //via metodos
                 //guardaPost.setNumeroLikes(this.totalLikesPost(guardaPost.getId_post()));
                 //criar metodo contalikes paramentro id do pods

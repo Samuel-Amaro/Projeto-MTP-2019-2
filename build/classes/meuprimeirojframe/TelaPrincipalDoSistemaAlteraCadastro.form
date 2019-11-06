@@ -99,7 +99,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="retornaParaTelaAnterior">
       <Properties>
-        <Property name="text" type="java.lang.String" value="retorna Para tela anterior!"/>
+        <Property name="text" type="java.lang.String" value="Sair Da Rede!"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="retornaParaTelaAnteriorActionPerformed"/>
@@ -135,9 +135,6 @@
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value=""/>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[702, 32767]"/>
-        </Property>
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -148,9 +145,6 @@
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder/>
               </Border>
-            </Property>
-            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[756, 3207]"/>
             </Property>
           </Properties>
 
