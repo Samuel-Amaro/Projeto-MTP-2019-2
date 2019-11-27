@@ -6,11 +6,11 @@ import java.time.LocalDate;
 
 public class PupularLikePost {
 //atributos
-int fk_Pessoa_Deu_Like;
-int fk_post;
-int id_like;
+private int fk_Pessoa_Deu_Like;
+private int fk_post;
+private int id_like;
 //vai ser um atributo de tipo data do tipo do banco de dados da tabela do like
-Date dataDoDia; 
+private Date dataDoDia; 
 //osb para pegar data do sistema via local e //java.time.LocalDate.now();//so passar por parametro para setar
 //para converter para o tipo date java.sql.Date.valueOf(java.time.LocalDate.now()) //para mandar para o banco de dados
 

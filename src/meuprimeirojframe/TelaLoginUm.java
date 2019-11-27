@@ -12,6 +12,7 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
     public TelaLoginUm() {
         initComponents();
         setLocationRelativeTo(null); // para a tela ficar centralizada
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -127,12 +128,16 @@ public class TelaLoginUm extends javax.swing.JFrame implements ActionListener {
         //objeto istanciado da classe do banco de dados, retorna um objeto do tipo conexão que sera usado para fazer uma conecxão
         ConexaoBancoDeDados conection = new ConexaoBancoDeDados();
         conection.conectar(); //chamado metodo conectar para conectar ao banco de dados
+        //criptografando a senha para buscar a senha criptografada que ja existe
+        //String cripAux = new String(jPasswordField1CampoSenha);
+        String crip = CriptografaSenha.CriptografaSenhaMd5(new String(this.jPasswordField1CampoSenha.getPassword()));
+        
         //o parametro e o campo texto que alguem digitou e logo depois pego o que ele digitou e passo como parametro
         //metodo que recebe um usuario e senha e verifica se ele existe se existir
         //o paramtro do metodo e diferente do que o getsenha retorna um vetorchar, por isso converto ele como string para passar para meu metodo
         //metodo login so faz puxar algo que ja existi no banco de dados, ou que não extiste retorna nada
         //OQUE MEU METODO LOGIN RETORNA E UM USUARIO COMPLETO COM TODOS SEUS DADOS, EU GUARDO ESSE CARA NUMA VARIAVEL DE TIPO USUARIO
-        this.userLogin = conection.login(campoTexto1Usuario.getText(),new String(jPasswordField1CampoSenha.getPassword()));
+        this.userLogin = conection.login(campoTexto1Usuario.getText(),crip);
         // o resultado de login retorna um usuario completo, se tiver alguem cadastrado retorna ele e verifica no if se login retorna a alguma pessoa
         //apos o retorno tenho que valida oque login retorna
         if(this.userLogin != null) { 

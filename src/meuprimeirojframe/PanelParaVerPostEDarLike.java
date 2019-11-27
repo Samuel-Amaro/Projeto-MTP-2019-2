@@ -62,6 +62,8 @@ public class PanelParaVerPostEDarLike extends javax.swing.JPanel {
                 InputStream entraBytes = new ByteArrayInputStream(this.post.getBinarioImagem());
                 BufferedImage preImagem = ImageIO.read(entraBytes); //costroi pre imagem
                 ImageIcon imagem = new ImageIcon(preImagem); //imagem em si
+                //REDIMENSIONANDO IMAGEM
+                imagem.setImage(imagem.getImage().getScaledInstance(664,262,1));
                 //setando imagem na label
                 this.labelImagemPost.setIcon(imagem);
             } catch(IOException e) {

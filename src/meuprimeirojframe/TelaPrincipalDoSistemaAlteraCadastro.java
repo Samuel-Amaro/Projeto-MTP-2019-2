@@ -4,10 +4,16 @@
 //tudo de comun entre essas telas e o usuario que agora e uma classe
 package meuprimeirojframe;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
@@ -24,8 +30,42 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
     //metodo costrutor que recebe um objeto do tipo usuario
     public TelaPrincipalDoSistemaAlteraCadastro(UsuarioDataBase userAltera) {
         initComponents();
+        painelPostInterno.setLayout(new WrapLayout());//mudando o layout para vertical
         this.userPrincipal = userAltera;
         setLocationRelativeTo(null);
+        
+        //mostra imagem de perfil na tela principal
+        //se não tiver imagem mostro uma mensagem
+        if(this.userPrincipal.getBinarioFotoPerfil() == null) {
+           this.labelMostraFotoPerfil.setText("Não possui Imagem de Perfil!");
+        }
+        //se tiver imagem mostro a foto
+        else {
+            try {
+                //criando uma conexão
+                ConexaoBancoDeDados conection = new ConexaoBancoDeDados(this.userPrincipal);
+                conection.conectar();
+                //buscando a foto de perfil do usuario atual
+                PreparedStatement mostraImagePerfil = conection.getConnection().prepareStatement("SELECT foto_perfil FROM pessoa WHERE codigo_id = ?;");
+                //setando no ponto de interrogação o id do usuario
+                mostraImagePerfil.setInt(1,this.userPrincipal.getId());
+                ResultSet bytesImagem = mostraImagePerfil.executeQuery(); //resultado da consulta
+                if(bytesImagem.next()) {
+                   byte[] binarioFoto = bytesImagem.getBytes(1);//pegando o binario da imagem
+                    InputStream bytesCompletoImagem = new ByteArrayInputStream(binarioFoto);
+                    BufferedImage imagemPronta = ImageIO.read(bytesCompletoImagem);
+                    ImageIcon iconeImage = new ImageIcon(imagemPronta);
+                    //redimensionando imagem
+                    iconeImage.setImage(iconeImage.getImage().getScaledInstance(this.labelMostraFotoPerfil.getWidth(),this.labelMostraFotoPerfil.getHeight(),1));
+                    this.labelMostraFotoPerfil.setIcon(iconeImage);
+                }
+            }catch(SQLException e) {
+                   JOptionPane.showMessageDialog(null,"ocorreu um erro ao buscar sua imagem de Perfil!");
+            }catch(IOException e) {
+		   JOptionPane.showMessageDialog(null,"ocorreu um erro ao Mostrar sua imagem de Perfil!");
+	    }
+            
+        }        
         //mostra uma mensagem inicial para o usuario!
         this.labelMostraMensagemInicial.setText("Ola, Bem Vindo " + this.userPrincipal.getNome());
         mostrarPost();
@@ -39,7 +79,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
         retornaParaTelaAnterior = new javax.swing.JButton();
         botaoCriaUmNovoPost = new javax.swing.JButton();
         excluirUmUsuario = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labelMostraFotoPerfil = new javax.swing.JLabel();
         labelMostraMensagemInicial = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         painelPostInterno = new javax.swing.JPanel();
@@ -75,11 +115,23 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        labelMostraFotoPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setToolTipText("");
 
         painelPostInterno.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout painelPostInternoLayout = new javax.swing.GroupLayout(painelPostInterno);
+        painelPostInterno.setLayout(painelPostInternoLayout);
+        painelPostInternoLayout.setHorizontalGroup(
+            painelPostInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 877, Short.MAX_VALUE)
+        );
+        painelPostInternoLayout.setVerticalGroup(
+            painelPostInternoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 446, Short.MAX_VALUE)
+        );
+
         jScrollPane1.setViewportView(painelPostInterno);
 
         botaoMostraPostsDeTodoMundo.setText("Ver Posts e Dar Like!");
@@ -97,7 +149,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelMostraFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -114,9 +166,9 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                         .addComponent(botaoCriaUmNovoPost, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(448, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
-                .addGap(22, 22, 22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 813, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,13 +176,13 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelMostraFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoCriaUmNovoPost))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGap(24, 24, 24)
                         .addComponent(labelMostraMensagemInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoAltera)
                         .addGap(18, 18, 18)
                         .addComponent(excluirUmUsuario)
@@ -138,9 +190,9 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                         .addComponent(retornaParaTelaAnterior)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoMostraPostsDeTodoMundo)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,7 +239,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
     //metodo que vai mostrar os ultimos 3 post na tela principal
     public void mostrarPost() {
         //variaveis que vou usar
-        ClassePost guardaPost;
+        ClassePost guardaPost;//objeto de tipo post
         MostrarPost mps;//tipo JpanelInterno
         try {
             con = new ConexaoBancoDeDados(this.userPrincipal);
@@ -199,7 +251,7 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
             ps.setInt(2, 3);
             ResultSet resultado = ps.executeQuery();
             //mostrasndo post de usuario para tela principal de maneira dinamica dentro de um scrolpanel
-            while (resultado.next()) {
+            while(resultado.next()) {
                 //atraves da população do objeto de tipo post, vou setar informações de um post nele e mandar para a jpanel criada que ira receber informações de 
                 //post avaliado no laço e mostrar na tela principal
                 guardaPost = new ClassePost(); //objeto de tipo classepost
@@ -212,13 +264,10 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
                 //via combinação de sub consultas de acordo com a consulta
                 guardaPost.setNumeroLikes(resultado.getInt(4));
                 guardaPost.setData(resultado.getDate(5));//setando o total de likes de um determindo post no objeto
-                //via metodos
-                //guardaPost.setNumeroLikes(this.totalLikesPost(guardaPost.getId_post()));
-                //criar metodo contalikes paramentro id do pods
-                //guardaPost
-                //istaciando um panel interno para ele passo um usuario e um post atual sendo avaliado pelo flag
+                //istaciando um panel interno para ele passo um usuario e um post atual sendo avaliado pelo flag,e um like recebido dessse post
                 mps = new MostrarPost(this.userPrincipal, guardaPost); //istancio um paneldetipo mostraPost
                 painelPostInterno.add(mps); //adiciono nele um post
+                
             }
             //esxception relacionadas    
         } catch (SQLException e) {
@@ -262,8 +311,8 @@ public class TelaPrincipalDoSistemaAlteraCadastro extends javax.swing.JFrame {
     private javax.swing.JButton botaoCriaUmNovoPost;
     private javax.swing.JButton botaoMostraPostsDeTodoMundo;
     private javax.swing.JButton excluirUmUsuario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelMostraFotoPerfil;
     private javax.swing.JLabel labelMostraMensagemInicial;
     private javax.swing.JPanel painelPostInterno;
     private javax.swing.JButton retornaParaTelaAnterior;

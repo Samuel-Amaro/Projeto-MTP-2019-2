@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class JframeVaiMostrarPostDeTodosParaDarLike extends javax.swing.JFrame {
      
@@ -14,16 +15,16 @@ public class JframeVaiMostrarPostDeTodosParaDarLike extends javax.swing.JFrame {
     private ClassePost post;
     //objeto que sempre vai conter um post atual sendo avalido pelo while
     private  ConexaoBancoDeDados  con; //objeto que vai ter a conexão
-    //private PanelParaVerPostEDarLike panelMostraPost = new ;//tipo panel interno
     private Date data; //data do post de tipo date do banco de dados
     public JframeVaiMostrarPostDeTodosParaDarLike() {
         initComponents();
         setLocationRelativeTo(null); // para a tela ficar centralizada
        
     }
-    public JframeVaiMostrarPostDeTodosParaDarLike(UsuarioDataBase e) {
+    public JframeVaiMostrarPostDeTodosParaDarLike(UsuarioDataBase user) {
         initComponents();
-        this.usuarioPrincipalQueVaiDarLike = e;
+        painelParaMostrarPost.setLayout(new WrapLayout());//mudando o layout para vertical
+        this.usuarioPrincipalQueVaiDarLike = user;
          mostrarTodosPosts();
     }
 
@@ -37,6 +38,17 @@ public class JframeVaiMostrarPostDeTodosParaDarLike extends javax.swing.JFrame {
         botaoRetornarParaTelaAnterior = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout painelParaMostrarPostLayout = new javax.swing.GroupLayout(painelParaMostrarPost);
+        painelParaMostrarPost.setLayout(painelParaMostrarPostLayout);
+        painelParaMostrarPostLayout.setHorizontalGroup(
+            painelParaMostrarPostLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 820, Short.MAX_VALUE)
+        );
+        painelParaMostrarPostLayout.setVerticalGroup(
+            painelParaMostrarPostLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 509, Short.MAX_VALUE)
+        );
 
         jScrollPane1.setViewportView(painelParaMostrarPost);
 
@@ -90,7 +102,7 @@ public class JframeVaiMostrarPostDeTodosParaDarLike extends javax.swing.JFrame {
     //metodo que chama o painel interno e istancia um e adiciona ele na minha tela atraves de um painel da tela sendo que no painel
     //daqui contem um layout de fluxo e vai poder vir quantos quiser e adicono o panel interno separado nele.
     public void mostrarTodosPosts() {
-     //fazendo uma conexaõ para puxar 3 posts do banco de dados da taebala post
+     //fazendo uma conexaõ para puxar 3 posts do banco de dados da tabela post
         try {
            con = new ConexaoBancoDeDados();
             con.conectar();
@@ -109,7 +121,7 @@ public class JframeVaiMostrarPostDeTodosParaDarLike extends javax.swing.JFrame {
                 this.painelParaMostrarPost.add(panelMostraPost);
             }
         } catch (SQLException e) {
-                 e.printStackTrace();
+                 JOptionPane.showMessageDialog(null,"ocorreu um erro ao buscar os posts de usuarios diferentes!");
         }
     }
     

@@ -37,7 +37,7 @@
                   </Group>
                   <Component id="jLabel1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="168" max="32767" attributes="0"/>
+              <EmptySpace pref="109" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

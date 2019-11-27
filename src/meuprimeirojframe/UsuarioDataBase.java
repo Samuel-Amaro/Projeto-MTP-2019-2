@@ -12,10 +12,19 @@ public class UsuarioDataBase{
   private String telefone;
   private String cidadeEstado;
   private String Senha;
+  private byte[] binarioFotoPerfil;//faz parte do extra nota extra
     
   //metodo especial get e set dos atributos
     public Integer getId() {
         return id;
+    }
+
+    public byte[] getBinarioFotoPerfil() {
+        return binarioFotoPerfil;
+    }
+
+    public void setBinarioFotoPerfil(byte[] binarioFotoPerfil) {
+        this.binarioFotoPerfil = binarioFotoPerfil;
     }
 
     public void setId(Integer id) {
